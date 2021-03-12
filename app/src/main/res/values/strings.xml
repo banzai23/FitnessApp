@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">FitnessApp</string>
+    <string name="title_calc">Calc</string>
+    <string name="title_prs">PRs</string>
+    <string name="title_equip">Equipment</string>
+    <string name="title_weight">1000</string>
+    <string name="hint_weight">Weight</string>
+    <string name="equals">=</string>
+    <string name="calories">Calories</string>
+    <string name="master">Master</string>
+    <string name="blank">Blank</string>
+</resources>
