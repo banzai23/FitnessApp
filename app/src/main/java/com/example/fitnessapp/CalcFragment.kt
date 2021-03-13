@@ -15,7 +15,7 @@ class CalcFragment : Fragment(R.layout.calc_fragment) {
 		_binding = binding
 		val imm: InputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
 
-		binding.etCalcMaster.setText(masterCalc.calc[0]))
+		binding.etCalcMaster.setText(masterCalc.calc[0])
 		binding.etCalc1.setText(masterCalc.calc[1])
 		binding.etCalc2.setText(masterCalc.calc[2])
 		binding.etCalc3.setText(masterCalc.calc[3])
