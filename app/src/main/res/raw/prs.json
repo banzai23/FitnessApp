@@ -1,4 +1,6 @@
 {
-  "equip": ["Bench Press"],
-  "weight": ["135"]
+  "equip": [{
+    "name": "Bench Press",
+    "weight" : "135"
+  }]
 }

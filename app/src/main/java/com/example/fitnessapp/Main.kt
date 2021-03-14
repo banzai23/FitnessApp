@@ -1,8 +1,14 @@
 package com.example.fitnessapp
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import kotlinx.serialization.Serializable
@@ -20,12 +26,17 @@ const val DEFAULT_PRS_FILE = "prs.json"
 @Serializable
 data class Calc(var calc: MutableList<String>)
 @Serializable
-data class PRS(var equip: MutableList<String>, var weight: MutableList<String>)
+data class PRS(var equip: MutableList<PRSX>)
+@Serializable
+data class PRSX(var name: String = "Equip Name", var weight: String = "0")
 
 lateinit var masterCalc: Calc
 lateinit var masterPRS: PRS
 
-class MainActivity : AppCompatActivity() {
+interface ActivityInterface {
+    fun saveDefaultFiles()
+}
+class MainActivity : AppCompatActivity(), ActivityInterface {
     private lateinit var activityBinding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +85,26 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+    private fun openDialog() {
+        val builder = AlertDialog.Builder(this)
+        val editText = EditText(this)
+        builder.setMessage(R.string.dialog_add)
+        builder.setView(editText)
+                .setPositiveButton(R.string.dialog_ok
+                ) { dialog, _ ->
+                    onDialogPositiveClick(dialog, editText.text.toString())
+                }
+                .setNegativeButton(R.string.dialog_cancel
+                ) { dialog, _ ->
+                    dialog.cancel()
+                }
+        builder.create()
+        builder.show()
+    }
+    private fun onDialogPositiveClick(dialog: DialogInterface, text: String) {
+        dialog.dismiss()
+        masterPRS.equip.add(PRSX(text, "0"))
+    }
     private fun fragmentTransaction(fragment: Fragment, tag: String) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
@@ -87,7 +118,21 @@ class MainActivity : AppCompatActivity() {
         }
         transaction.commit()
     }
-    private fun saveDefaultFiles() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_new -> {
+            openDialog()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+    override fun saveDefaultFiles() {
         this.openFileOutput(DEFAULT_CALC_FILE, Context.MODE_PRIVATE).use {
             val jsonToFile = Json.encodeToString(masterCalc)
             it.write(jsonToFile.toByteArray())

@@ -9,4 +9,15 @@
     <string name="calories">Calories</string>
     <string name="master">Master</string>
     <string name="blank">Blank</string>
+    <string name="save">Save</string>
+
+    <string name="add_equip">+</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_add">Add Equipment: </string>
+    <string name="dialog_delete_prs">Are you sure you want to delete</string>
+
 </resources>
